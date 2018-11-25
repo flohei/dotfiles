@@ -56,20 +56,29 @@ plugins=(git)
 
 # User configuration
 
-export PATH="/Users/flohei/bin:/Applications/Xcode.app/Contents/Developer/Tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin"
+export PATH=$PATH:/Users/flohei/bin
+export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/Tools
+export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/bin
+export PATH=$PATH:/bin
+export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/sbin
+export PATH=$PATH:/usr/local/MacGPG2/bin
+export PATH=$PATH:/usr/texbin
+export PATH=$PATH:$HOME/Library/Python/2.7/bin # powerline-shell!
 # export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
+if [[ -n $SSH_CONNECTION ]]; then
+  export EDITOR='vim'
+else
+  export EDITOR='subl'
+fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -100,22 +109,45 @@ alias gpush="git push"
 alias gbranch="git checkout -b"
 alias gclone="git clone"
 alias g="gittower ."
+alias tower="g"
 alias s="subl ."
 alias o="open ."
 
+function o() {
+  z $1 && open .
+}
+
+function e() {
+  _z $1
+  git pull
+  gittower .
+  subl .
+}
+
+# Go to the root of the current git project, or just go one folder up
+function up() {
+  export git_dir="$(git rev-parse --show-toplevel 2> /dev/null)"
+  if [ -z $git_dir ]
+  then
+    cd ..
+  else
+    cd $git_dir
+  fi
+}
+
 function powerline_precmd() {
-      PS1="$(~/powerline-shell.py $? --shell zsh 2> /dev/null)"
-    }
+    PS1="$(powerline-shell --shell zsh $?)"
+}
 
-    function install_powerline_precmd() {
-      for s in "${precmd_functions[@]}"; do
-        if [ "$s" = "powerline_precmd" ]; then
-          return
-        fi
-      done
-      precmd_functions+=(powerline_precmd)
-    }
-
-    if [ "$TERM" != "linux" ]; then
-        install_powerline_precmd
+function install_powerline_precmd() {
+  for s in "${precmd_functions[@]}"; do
+    if [ "$s" = "powerline_precmd" ]; then
+      return
     fi
+  done
+  precmd_functions+=(powerline_precmd)
+}
+
+if [ "$TERM" != "linux" ]; then
+    install_powerline_precmd
+fi
