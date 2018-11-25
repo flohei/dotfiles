@@ -1,5 +1,8 @@
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH=/Users/flohei/.oh-my-zsh
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -7,119 +10,95 @@ export ZSH=$HOME/.oh-my-zsh
 # time that oh-my-zsh is loaded.
 ZSH_THEME="robbyrussell"
 
-alias zshrc="subl ~/.zshrc"
-alias bundle!="bundle install && rake install"
-alias be="bundle exec"
-alias bi="bundle install"
-alias bu="bundle update"
-alias ri="rake install"
-alias gc="git checkout"
-alias gco="git checkout"
-alias gcm="git checkout master"
-alias gpull="git pull"
-alias gpush="git push"
-alias gbranch="git checkout -b"
-alias gclone="git clone"
-alias g="gittower ."
-alias s="subl ."
-alias o="open ."
-alias server="python -m SimpleHTTPServer"
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# Download YouTube videos
-alias youtube="youtube-dl"
-alias yt="youtube-dl"
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# Compress pngs
-alias compress_png="pngquant"
-alias png="pngquant"
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-function o() {
-  z $1 && open .
-}
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
-function e() {
-  _z $1
-  git pull
-  gittower .
-  subl .
-}
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-. ~/.fastlane/completions/completion.sh
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-export PATH=$PATH:/Applications/Postgres.app/Contents/Versions/latest/bin
-export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-export PATH="/usr/local/heroku/bin:$PATH"
-export PATH="$HOME/.fastlane/bin:$PATH"
-export PATH=$HOME/bin:$PATH
-export PATH=$HOME/homebrew/bin:$PATH
-export LD_LIBRARY_PATH=$HOME/homebrew/lib:$LD_LIBRARY_PATH
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-export FL_PASSWORD="yo"
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
-# we don't want to influence the stats
-export FASTLANE_SKIP_UPDATE_CHECK="1"
-export FASTLANE_OPT_OUT_USAGE="1"
-export FASTLANE_OPT_OUT_CRASH_REPORTING="1"
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-export LANG=en_US.UTF-8
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
 
-. ~/.oh-my-zsh/felix/z.sh
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Xcode via @orta
-openx(){ 
-  if test -n "$(find . -maxdepth 1 -name '*.xcworkspace' -print -quit)"
-  then
-    echo "Opening workspace"
-    open *.xcworkspace
-    return
-  else
-    if test -n "$(find . -maxdepth 1 -name '*.xcodeproj' -print -quit)"
-    then
-      echo "Opening project"
-      open *.xcodeproj
-      return  
-    else
-      echo "Nothing found"
-    fi
-  fi
-}
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+# User configuration
+
+export PATH="/Users/flohei/bin:/Applications/Xcode.app/Contents/Developer/Tools:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/MacGPG2/bin:/usr/texbin"
+# export MANPATH="/usr/local/man:$MANPATH"
 
 source $ZSH/oh-my-zsh.sh
-source $HOME/.keys
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vim'
-else
-  export EDITOR='subl'
-fi
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
-# Go to the root of the current git project, or just go one folder up
-function up() {
-  export git_dir="$(git rev-parse --show-toplevel 2> /dev/null)"
-  if [ -z $git_dir ]
-  then
-    cd ..
-  else
-    cd $git_dir
-  fi
-}
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
 
-# Powerline
+# ssh
+# export SSH_KEY_PATH="~/.ssh/dsa_id"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+
 function powerline_precmd() {
-    PS1="$(~/.oh-my-zsh/felix/powerline-shell/powerline-shell.py $? --shell zsh 2> /dev/null)"
-}
+      PS1="$(~/powerline-shell.py $? --shell zsh 2> /dev/null)"
+    }
 
-function install_powerline_precmd() {
-  for s in "${precmd_functions[@]}"; do
-    if [ "$s" = "powerline_precmd" ]; then
-      return
+    function install_powerline_precmd() {
+      for s in "${precmd_functions[@]}"; do
+        if [ "$s" = "powerline_precmd" ]; then
+          return
+        fi
+      done
+      precmd_functions+=(powerline_precmd)
+    }
+
+    if [ "$TERM" != "linux" ]; then
+        install_powerline_precmd
     fi
-  done
-  precmd_functions+=(powerline_precmd)
-}
-
-install_powerline_precmd
-
-# Init rbenv
-eval "$(rbenv init -)"
