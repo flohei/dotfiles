@@ -86,6 +86,23 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias zshrc="subl ~/.zshrc"
+alias bundle!="bundle install && rake install"
+alias be="bundle exec"
+alias bi="bundle install"
+alias bu="bundle update"
+alias ri="rake install"
+alias gc="git checkout"
+alias gco="git checkout"
+alias gcm="git checkout master"
+alias gpull="git pull"
+alias gpush="git push"
+alias gbranch="git checkout -b"
+alias gclone="git clone"
+alias g="gittower ."
+alias s="subl ."
+alias o="open ."
+
 function powerline_precmd() {
       PS1="$(~/powerline-shell.py $? --shell zsh 2> /dev/null)"
     }
