@@ -1,9 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=/Users/flohei/.oh-my-zsh
 
-export LC_ALL=en_US.UTF-8
-export LANG=en_US.UTF-8
-
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -71,6 +68,7 @@ export PATH=$PATH:$HOME/Library/Python/2.7/bin # powerline-shell!
 source $ZSH/oh-my-zsh.sh
 
 # You may need to manually set your language environment
+export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -101,6 +99,7 @@ alias be="bundle exec"
 alias bi="bundle install"
 alias bu="bundle update"
 alias ri="rake install"
+
 alias gc="git checkout"
 alias gco="git checkout"
 alias gcm="git checkout master"
@@ -108,10 +107,16 @@ alias gpull="git pull"
 alias gpush="git push"
 alias gbranch="git checkout -b"
 alias gclone="git clone"
+alias gstash="git stash"
+alias gstat="git status"
+
 alias g="gittower ."
 alias tower="g"
+
 alias s="subl ."
 alias o="open ."
+
+alias ll="ls -lha"
 
 function o() {
   z $1 && open .
