@@ -118,6 +118,9 @@ alias o="open ."
 
 alias ll="ls -lha"
 
+# call it a day – push build to fastlane
+alias ciad="be fastlane ios bump_build_and_beta; gc ."
+
 function o() {
   z $1 && open .
 }
@@ -156,3 +159,6 @@ function install_powerline_precmd() {
 if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
+
+# added by travis gem
+[ -f /Users/flohei/.travis/travis.sh ] && source /Users/flohei/.travis/travis.sh
