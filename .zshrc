@@ -119,7 +119,7 @@ alias o="open ."
 alias ll="ls -lha"
 
 # call it a day – push build to fastlane
-alias ciad="be fastlane ios bump_build_and_beta; gc ."
+alias ciad="gpull; be fastlane ios bump_build_and_beta; gc ."
 
 function o() {
   z $1 && open .
