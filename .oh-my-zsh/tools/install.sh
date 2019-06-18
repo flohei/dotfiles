@@ -24,10 +24,12 @@ main() {
   # which may fail on systems lacking tput or terminfo
   set -e
 
-  if ! command -v zsh >/dev/null 2>&1; then
+  CHECK_ZSH_INSTALLED=$(grep /zsh$ /etc/shells | wc -l)
+  if [ ! $CHECK_ZSH_INSTALLED -ge 1 ]; then
     printf "${YELLOW}Zsh is not installed!${NORMAL} Please install zsh first!\n"
     exit
   fi
+  unset CHECK_ZSH_INSTALLED
 
   if [ ! -n "$ZSH" ]; then
     ZSH=~/.oh-my-zsh
@@ -47,7 +49,7 @@ main() {
   umask g-w,o-w
 
   printf "${BLUE}Cloning Oh My Zsh...${NORMAL}\n"
-  command -v git >/dev/null 2>&1 || {
+  hash git >/dev/null 2>&1 || {
     echo "Error: git is not installed"
     exit 1
   }
@@ -59,7 +61,7 @@ main() {
       exit 1
     fi
   fi
-  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git "$ZSH" || {
+  env git clone --depth=1 https://github.com/robbyrussell/oh-my-zsh.git $ZSH || {
     printf "Error: git clone of oh-my-zsh repo failed\n"
     exit 1
   }
@@ -72,14 +74,14 @@ main() {
   fi
 
   printf "${BLUE}Using the Oh My Zsh template file and adding it to ~/.zshrc${NORMAL}\n"
-  cp "$ZSH"/templates/zshrc.zsh-template ~/.zshrc
+  cp $ZSH/templates/zshrc.zsh-template ~/.zshrc
   sed "/^export ZSH=/ c\\
-  export ZSH=\"$ZSH\"
+  export ZSH=$ZSH
   " ~/.zshrc > ~/.zshrc-omztemp
   mv -f ~/.zshrc-omztemp ~/.zshrc
 
   # If this user's login shell is not already "zsh", attempt to switch.
-  TEST_CURRENT_SHELL=$(basename "$SHELL")
+  TEST_CURRENT_SHELL=$(expr "$SHELL" : '.*/\(.*\)')
   if [ "$TEST_CURRENT_SHELL" != "zsh" ]; then
     # If this platform provides a "chsh" command (not Cygwin), do it, man!
     if hash chsh >/dev/null 2>&1; then
@@ -103,12 +105,12 @@ main() {
   echo ''
   echo 'Please look over the ~/.zshrc file to select plugins, themes, and options.'
   echo ''
-  echo 'p.s. Follow us at https://twitter.com/ohmyzsh'
+  echo 'p.s. Follow us at https://twitter.com/ohmyzsh.'
   echo ''
-  echo 'p.p.s. Get stickers, shirts, and coffee mugs at https://shop.planetargon.com/collections/oh-my-zsh'
+  echo 'p.p.s. Get stickers and t-shirts at http://shop.planetargon.com.'
   echo ''
   printf "${NORMAL}"
-  env zsh -l
+  env zsh
 }
 
 main

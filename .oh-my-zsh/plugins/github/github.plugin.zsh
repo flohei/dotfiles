@@ -1,6 +1,8 @@
-# Set up hub wrapper for git, if it is available; https://github.com/github/hub
-if (( $+commands[hub] )); then
-  alias git=hub
+# Set up hub wrapper for git, if it is available; http://github.com/github/hub
+if [ "$commands[(I)hub]" ]; then
+  if hub --version &>/dev/null; then
+    eval $(hub alias -s zsh)
+  fi
 fi
 
 # Functions #################################################################
@@ -36,7 +38,7 @@ new_gh() { # [DIRECTORY]
   print '.*'"\n"'*~' >> .gitignore
   git add [^.]* \
     || return
-  git add -f .gitignore \
+  git add .gitignore \
     || return
   git commit -m 'Initial commit.' \
     || return
@@ -63,7 +65,7 @@ exist_gh() { # [DIRECTORY]
 # git.io "GitHub URL"
 #
 # Shorten GitHub url, example:
-#   https://github.com/nvogel/dotzsh    >   https://git.io/8nU25w
+#   https://github.com/nvogel/dotzsh    >   http://git.io/8nU25w  
 # source: https://github.com/nvogel/dotzsh
 # documentation: https://github.com/blog/985-git-io-github-url-shortener
 #

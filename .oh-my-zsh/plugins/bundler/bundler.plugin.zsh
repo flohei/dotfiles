@@ -14,7 +14,6 @@ bundled_commands=(
   cucumber
   foodcritic
   guard
-  hanami
   irb
   jekyll
   kitchen
@@ -54,14 +53,10 @@ done
 ## Functions
 
 bundle_install() {
-  if ! _bundler-installed; then
-    echo "Bundler is not installed"
-  elif ! _within-bundled-project; then
-    echo "Can't 'bundle install' outside a bundled project"
-  else
+  if _bundler-installed && _within-bundled-project; then
     local bundler_version=`bundle version | cut -d' ' -f3`
     if [[ $bundler_version > '1.4.0' || $bundler_version = '1.4.0' ]]; then
-      if [[ "$OSTYPE" = (darwin|freebsd)* ]]
+      if [[ "$OSTYPE" = darwin* ]]
       then
         local cores_num="$(sysctl -n hw.ncpu)"
       else
@@ -71,6 +66,8 @@ bundle_install() {
     else
       bundle install $@
     fi
+  else
+    echo "Can't 'bundle install' outside a bundled project"
   fi
 }
 

@@ -68,10 +68,6 @@ prompt_glyph="%{%(#.${root_prompt}.${user_prompt}) %2G%}"
 
 setopt promptsubst
 
-# Workaround for zsh 5.2 release (kudos to @timothybasanov)
-autoload +X VCS_INFO_nvcsformats
-functions[VCS_INFO_nvcsformats]=${functions[VCS_INFO_nvcsformats]/local -a msgs/}
-
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
