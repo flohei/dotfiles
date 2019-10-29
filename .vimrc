@@ -27,3 +27,8 @@ set statusline+=%y 		" filetype
 set statusline+=%c, 	" cursor column
 set statusline+=%l/%L 	" cursor line/total lines
 set statusline+=\ %P 	" percent through file
+
+" Highlight trailing whitespace
+match ErrorMsg '\s\+$'
+" Remove trailing whitespace automatically
+autocmd BufWritePre * :%s/\s\+$//e
