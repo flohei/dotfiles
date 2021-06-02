@@ -6,5 +6,6 @@
     "git", 
     "jobs", 
     "root"
-  ]
+  ],
+  "mode": "flat"
 }
