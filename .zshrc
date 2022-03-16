@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh installation.
-export ZSH=/Users/flohei/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -53,7 +53,7 @@ plugins=(git)
 
 # User configuration
 
-export PATH=$PATH:/Users/flohei/bin
+export PATH=$PATH:$HOME/bin
 export PATH=$PATH:/Applications/Xcode.app/Contents/Developer/Tools
 export PATH=$PATH:/usr/local/bin
 export PATH=$PATH:/usr/bin
