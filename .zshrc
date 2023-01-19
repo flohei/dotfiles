@@ -93,7 +93,7 @@ fi
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias zshrc="subl ~/.zshrc"
+alias zshrc="bbedit ~/.zshrc"
 alias bundle!="bundle install && rake install"
 alias be="bundle exec"
 alias bi="bundle install"
@@ -110,16 +110,7 @@ alias gclone="git clone"
 alias gstash="git stash"
 alias gstat="git status"
 
-alias g="gittower ."
-alias tower="g"
-
-alias s="subl ."
-alias o="open ."
-
 alias ll="ls -lha"
-
-# call it a day – push build to fastlane
-alias ciad="gpull; be fastlane ios bump_build_and_beta; gc ."
 
 function o() {
   z $1 && open .
@@ -128,8 +119,7 @@ function o() {
 function e() {
   _z $1
   git pull
-  gittower .
-  subl .
+  bbedit .
 }
 
 # Go to the root of the current git project, or just go one folder up
@@ -142,6 +132,8 @@ function up() {
     cd $git_dir
   fi
 }
+
+# powerline-shell
 
 function powerline_precmd() {
     PS1="$(powerline-shell --shell zsh $?)"
@@ -156,9 +148,6 @@ function install_powerline_precmd() {
   precmd_functions+=(powerline_precmd)
 }
 
-if [ "$TERM" != "linux" ]; then
+if [ "$TERM" != "linux" -a -x "$(command -v powerline-shell)" ]; then
     install_powerline_precmd
 fi
-
-# added by travis gem
-[ -f /Users/flohei/.travis/travis.sh ] && source /Users/flohei/.travis/travis.sh
